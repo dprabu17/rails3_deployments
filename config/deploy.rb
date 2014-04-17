@@ -45,12 +45,12 @@ set :user, "deployer"
 #     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
 #   end
 # end
-namespace :bundle do
-  desc "run bundle install and ensure all gem requirements are met"
-  task :install do
-    run "cd #{current_path} && bundle install "
-  end
-end
+# namespace :bundle do
+#   desc "run bundle install and ensure all gem requirements are met"
+#   task :install do
+#     run "cd #{current_path} && bundle install "
+#   end
+# end
 
 namespace :deploy do
   task :start do ; end
@@ -90,7 +90,7 @@ task :symlink_assets, roles: :web do
 
 after "deploy:restart", "deploy:cleanup"
 before "deploy:restart", "copy_in_database_yml"
-before "deploy:restart", "bundle:install"
+#before "deploy:restart", "bundle:install"
 before "deploy:restart", "deploy:assets:precompile"
 before "deploy:restart", "run_migrations"
 
