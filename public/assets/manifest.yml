@@ -27,8 +27,10 @@ rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 wood_pattern.jpg: wood_pattern-647c9369a15bffa318085842dd11485b.jpg
 wood_pattern/index.jpg: wood_pattern-647c9369a15bffa318085842dd11485b.jpg
-application.js: application-f6e014acfd1e48bdee3dfac70f69de67.js
-application/index.js: application-f6e014acfd1e48bdee3dfac70f69de67.js
+application.js: application-a3cc943ad1002124d3d43448970e587e.js
+application/index.js: application-a3cc943ad1002124d3d43448970e587e.js
+modernizr.js: modernizr-1b2cd4722625ecaf5af69dee3d079a9b.js
+modernizr/index.js: modernizr-1b2cd4722625ecaf5af69dee3d079a9b.js
 application.css: application-9bafe987e0e94bc609df0f8e0694141e.css
 application/index.css: application-9bafe987e0e94bc609df0f8e0694141e.css
 style.css: style-bd0910f33aea22fcf6787bbb1bab706b.css
