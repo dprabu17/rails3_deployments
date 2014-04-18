@@ -1,8 +1,10 @@
+require 'rvm/capistrano'
 set :application, "rails3_deployment"
 set :rails_env, 'production'
 
 set :scm, :git
 set :repository, "git@github.com:dprabu17/rails3_deployments.git"
+set :rvm_type, :system
 #set :branch, fetch(:branch, "capistrano")
 set :env, fetch(:env, "production")
 set :normalize_asset_timestamps, false #turn off default behavior /public/images
@@ -37,7 +39,14 @@ namespace :assets do
 end
 
 end
+namespace :bundle do
 
+  desc "run bundle install and ensure all gem requirements are met"
+  task :install do
+    run "cd #{current_path} && bundle install "
+  end
+
+end
 desc "Run rake db migrate on server" 
 task :run_migrations, :roles => :db do
     puts "RUNNING DB MIGRATIONS"
@@ -53,3 +62,4 @@ after "deploy:restart", "deploy:cleanup"
 before "deploy:restart", "copy_in_database_yml"
 before "deploy:restart", "deploy:assets:precompile"
 before "deploy:restart", "run_migrations"
+before 'deploy:finalize_update', 'bundle:install'
