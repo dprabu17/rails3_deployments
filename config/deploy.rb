@@ -1,28 +1,33 @@
 require 'rvm/capistrano'
+
+
 set :application, "rails3deployment"
 set :rails_env, 'production'
 
 set :scm, :git
 set :repository, "git@github.com:dprabu17/rails3_deployments.git"
-set :rvm_type, :system
 #set :branch, fetch(:branch, "capistrano")
-set :env, fetch(:env, "production")
+#set :env, fetch(:env, "production")
+#set :scm_passphrase, ""
+
+set :rvm_type, :system # system installation of RVM /usr/local/.rvm
 set :normalize_asset_timestamps, false #turn off default behavior /public/images
 
-set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache # Use this option, otherwise each deploy will do a full repository clone every time.
 set :deploy_to, "/home/webapps/www/#{application}"
-
 
 set :copy_dir, "/home/prabu/tmp"
 set :remote_copy_dir, "/tmp" 
-set :use_sudo, false
 
-role :web, "188.226.210.218"                          # Your HTTP server, Apache/etc
-role :db,  "188.226.210.218", :primary => true # This is where Rails migrations will run
 set :user, "deployer"
+set :use_sudo, false #deployer user has all permissions 
 #set :scm_passphrase, "deployer"  # The deploy user's password
 default_run_options[:pty] = true #Must be set for the password prompt
 
+role :web, "188.226.210.218"                          # Your HTTP server, Apache/etc
+role :db,  "188.226.210.218", :primary => true # This is where Rails migrations will run
+
+#Custom Deploy
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
@@ -39,14 +44,16 @@ namespace :assets do
 end
 
 end
-namespace :bundle do
 
+#run bundle install
+namespace :bundle do
   desc "run bundle install and ensure all gem requirements are met"
   task :install do
     run "cd #{current_path} && bundle install "
   end
-
 end
+
+#run db migration
 desc "Run rake db migrate on server" 
 task :run_migrations, :roles => :db do
     puts "RUNNING DB MIGRATIONS"
@@ -60,6 +67,6 @@ end
 
 after "deploy:restart", "deploy:cleanup"
 before "deploy:restart", "copy_in_database_yml"
-before "deploy:restart", "deploy:assets:precompile"
 before "deploy:restart", "run_migrations"
+before "deploy:restart", "deploy:assets:precompile"
 before 'deploy:finalize_update', 'bundle:install'
