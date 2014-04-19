@@ -1,5 +1,5 @@
 require 'rvm/capistrano'
-set :application, "rails3_deployment"
+set :application, "rails3deployment"
 set :rails_env, 'production'
 
 set :scm, :git
@@ -10,12 +10,12 @@ set :env, fetch(:env, "production")
 set :normalize_asset_timestamps, false #turn off default behavior /public/images
 
 set :deploy_via, :remote_cache
-set :deploy_to, "/home/webapps/www/rails3deployment"
+set :deploy_to, "/home/webapps/www/#{application}"
 
 
 set :copy_dir, "/home/prabu/tmp"
 set :remote_copy_dir, "/tmp" 
-set :use_sudo, true
+set :use_sudo, false
 
 role :web, "188.226.210.218"                          # Your HTTP server, Apache/etc
 role :db,  "188.226.210.218", :primary => true # This is where Rails migrations will run
